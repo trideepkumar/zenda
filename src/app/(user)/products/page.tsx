@@ -88,7 +88,7 @@ export default function ProductsPage() {
             max={1000}
             step={10}
             value={priceRange}
-            onValueChange={setPriceRange}
+            // onValueChange={setPriceRange}
           />
         </div>
       </div>
@@ -99,7 +99,9 @@ export default function ProductsPage() {
           <h1 className="text-2xl font-bold tracking-tight">
             {category === "All" ? "All Products" : category}
           </h1>
-          <Select value={sortBy} onValueChange={setSortBy}>
+          <Select value={sortBy}
+          // onValueChange={setSortBy}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
