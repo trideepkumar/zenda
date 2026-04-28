@@ -80,7 +80,9 @@ export default function NotFound() {
         </div>
 
         {/* ── Back to Dashboard ── */}
-        <Button variant="link" asChild className="group text-muted-foreground hover:text-primary transition-colors">
+        <Button variant="link"
+        //  asChild 
+         className="group text-muted-foreground hover:text-primary transition-colors">
           <Link href="/" className="flex items-center gap-2">
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
             Back to Dashboard

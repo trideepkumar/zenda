@@ -64,12 +64,14 @@ export default function ProductDetailPage() {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
         <h2 className="text-2xl font-bold mb-2">Product Not Found</h2>
-        <Button asChild><Link href="/products">Back to Shop</Link></Button>
+        <Button 
+        // asChild
+        ><Link href="/products">Back to Shop</Link></Button>
       </div>
     );
   }
 
-  const isLowStock = product.stock > 0 && product.stock < 5;
+  // const isLowStock = product.stock > 0 && product.stock < 5;
   const isOutOfStock = product.stock === 0;
 
   return (
@@ -140,8 +142,8 @@ export default function ProductDetailPage() {
 
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-black text-foreground">${product.price.toFixed(2)}</span>
-            {product.oldPrice && (
-              <span className="text-sm text-muted-foreground line-through">${product.oldPrice.toFixed(2)}</span>
+            {product.price && (
+              <span className="text-sm text-muted-foreground line-through">${product.price.toFixed(2)}</span>
             )}
           </div>
 

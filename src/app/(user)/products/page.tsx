@@ -177,7 +177,7 @@ const ProductCard = memo(function ProductCard({ product, onAddToCart }: ProductC
         <div className="flex gap-1.5 md:gap-2 mt-1">
           {/* Mobile: Icon only / Laptop: Text */}
           <Button
-            asChild
+            // asChild
             variant="secondary"
             className="flex-1 md:flex-none rounded-xl md:rounded-2xl h-9 md:h-11 px-0 md:px-4 bg-primary/5 hover:bg-primary/10 text-primary border-none"
           >

@@ -229,7 +229,7 @@ const ProductCard = memo(function ProductCard({
         {/* CTA */}
         <div className="flex gap-1.5 mt-auto pt-1">
           <Button
-            asChild
+            // asChild
             variant="secondary"
             size="sm"
             className="flex-none rounded-xl h-9 w-9 p-0 md:px-3 md:w-auto bg-primary/8 hover:bg-primary/15 text-primary border-none"
@@ -283,7 +283,7 @@ function SectionHeader({
         <Button
           variant="ghost"
           size="sm"
-          asChild
+          // asChild
           className="text-primary font-semibold hover:bg-primary/5 p-0 h-auto text-xs md:text-sm"
         >
           <Link href={href}>
