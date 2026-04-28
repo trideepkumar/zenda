@@ -412,7 +412,7 @@ export default function UserDashboard() {
     <div className="space-y-8 md:space-y-12 pb-20">
       {/* ── 2. FOOD CATEGORIES ──────────────────────────────────────────── */}
       <section className="space-y-3">
-        <div className="mb-1">
+        <div className="mb-1 text-center">
           <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
             Food & Groceries
           </span>
@@ -432,7 +432,7 @@ export default function UserDashboard() {
 
       {/* ── 3. OTHER CATEGORIES ─────────────────────────────────────────── */}
      <section className="space-y-3">
-  <div className="mb-1">
+  <div className="mb-1 text-center  ">
     <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
       Other Categories
     </span>
