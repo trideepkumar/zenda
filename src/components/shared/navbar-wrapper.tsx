@@ -19,7 +19,7 @@ export function NavbarWrapper() {
   }, [pathname]);
 
   return (
-   <header className="fixed top-0 left-0 w-full z-50 bg-background border-b">
+   <header className="sticky top-0 z-50 bg-background border-b">
   <Navbar />
 
   <div

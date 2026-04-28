@@ -10,20 +10,15 @@ export default function DashboardLayout({
 }) {
   return (
     <SmoothScroll>
-      <div className="min-h-screen bg-background selection:bg-primary/10">
-        
-        {/* Fixed Navbar */}
-        <NavbarWrapper />
+     <div className="flex flex-col min-h-screen w-full bg-background">
+  <NavbarWrapper />
 
-        {/* Page Content */}
-        <div className="pt-[140px] md:pt-16">
-          <main className="max-w-screen-xl mx-auto w-full p-4 md:p-8">
-            {children}
-          </main>
+  <main className="flex-1 max-w-screen-xl mx-auto w-full p-4 md:p-8">
+    {children}
+  </main>
 
-          <Footer />
-        </div>
-      </div>
+  <Footer />
+</div>
     </SmoothScroll>
   );
 }
