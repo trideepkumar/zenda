@@ -157,98 +157,94 @@ const ProductCard = memo(function ProductCard({
     : null;
 
   return (
-    <div className="group relative flex flex-col bg-card rounded-2xl border border-border overflow-hidden shadow-sm hover:shadow-xl hover:shadow-primary/8 transition-all duration-300 hover:-translate-y-1">
-      {/* Image */}
-      <div className="relative bg-muted/30 overflow-hidden">
-        <div className="absolute top-2.5 right-2.5 z-10">
+    <div className="group relative flex flex-col bg-card rounded-3xl border border-border/50 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1.5">
+      
+      {/* Image Container */}
+      <div className="relative aspect-[4/4] overflow-hidden bg-muted/20">
+        {/* Badges Row */}
+        <div className="absolute top-3 left-3 right-3 z-20 flex justify-between items-start pointer-events-none">
+          {discount ? (
+            <span className="pointer-events-auto bg-emerald-500/90 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-lg shadow-emerald-500/20">
+              -{discount}%
+            </span>
+          ) : <div />}
+
           <button
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               setWished((w) => !w);
             }}
-            className="h-8 w-8 rounded-full bg-background/85 backdrop-blur-md border border-border shadow-sm flex items-center justify-center transition-all active:scale-90 hover:scale-105"
+            aria-label="Add to wishlist"
+            className="pointer-events-auto h-10 w-10 rounded-full bg-white/80 backdrop-blur-lg border border-white/20 shadow-xl flex items-center justify-center transition-all active:scale-75 hover:bg-white"
           >
             <Heart
               className={cn(
-                "h-3.5 w-3.5 transition-colors",
-                wished
-                  ? "fill-rose-500 text-rose-500"
-                  : "text-muted-foreground",
+                "h-5 w-5 transition-all duration-300",
+                wished ? "fill-rose-500 text-rose-500 scale-110" : "text-slate-400"
               )}
             />
           </button>
         </div>
 
-        {discount && (
-          <div className="absolute top-2.5 left-2.5 z-10">
-            <span className="text-[9px] font-black text-white bg-emerald-500 px-1.5 py-0.5 rounded-md uppercase tracking-wide shadow-sm">
-              {discount}% OFF
-            </span>
-          </div>
-        )}
-
-        <Link href={`/products/${product.id}`} className="block aspect-[4/3.5]">
+        <Link href={`/products/${product.id}`} className="block h-full w-full">
           <img
             src={product.imageUrl}
             alt={product.name}
-            className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-108"
+            className="object-cover w-full h-full transition-transform duration-1000 ease-out group-hover:scale-110"
             loading="lazy"
           />
         </Link>
       </div>
 
-      {/* Content */}
-      <div className="p-3 md:p-4 flex flex-col gap-2 flex-1">
-        {/* Rating */}
-        <div className="flex items-center gap-1">
-          <Star className="h-3 w-3 fill-amber-400 text-amber-400 flex-shrink-0" />
-          <span className="text-[10px] text-muted-foreground font-medium">
-            4.8 <span className="opacity-60">(120+)</span>
-          </span>
+      {/* Content Area */}
+      <div className="p-4 md:p-5 flex flex-col flex-1">
+        {/* Category/Rating Row */}
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-1 bg-amber-50 px-2 py-0.5 rounded-lg">
+            <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
+            <span className="text-[11px] font-bold text-amber-700">4.8</span>
+          </div>
+          <span className="text-[11px] text-muted-foreground font-medium">120+ Reviews</span>
         </div>
 
-        <Link href={`/products/${product.id}`} className="flex-1">
-          <h3 className="font-bold text-xs md:text-sm text-foreground leading-snug line-clamp-2 group-hover:text-primary transition-colors min-h-[2.2rem] md:min-h-[2.6rem]">
+        {/* Title */}
+        <Link href={`/products/${product.id}`} className="mb-3">
+          <h3 className="font-semibold text-sm md:text-base text-foreground leading-tight line-clamp-2 group-hover:text-primary transition-colors h-10">
             {product.name}
           </h3>
         </Link>
 
-        {/* Price row */}
-        <div className="flex items-baseline gap-1.5 flex-wrap">
-          <span className="text-base md:text-lg font-black text-primary leading-none">
+        {/* Pricing */}
+        <div className="flex items-end gap-2 mb-4">
+          <span className="text-xl font-bold text-foreground">
             ${product.price.toLocaleString()}
           </span>
           {oldPrice && (
-            <span className="text-[10px] md:text-xs text-muted-foreground line-through opacity-55">
+            <span className="text-sm text-muted-foreground line-through decoration-rose-500/30 mb-0.5">
               ${oldPrice.toLocaleString()}
             </span>
           )}
         </div>
 
-        {/* CTA */}
-        <div className="flex gap-1.5 mt-auto pt-1">
-          <Button
-            // asChild
-            variant="secondary"
-            size="sm"
-            className="flex-none rounded-xl h-9 w-9 p-0 md:px-3 md:w-auto bg-primary/8 hover:bg-primary/15 text-primary border-none"
-          >
-            <Link href={`/products/${product.id}`}>
-              <span className="hidden md:inline text-[11px] font-bold">
-                Details
-              </span>
-              <Plus className="md:hidden h-3.5 w-3.5" />
-            </Link>
-          </Button>
-
+        {/* Action Buttons */}
+        <div className="flex gap-2 mt-auto">
           <Button
             onClick={(e) => onAddToCart(e, product)}
-            size="sm"
-            className="flex-1 rounded-xl h-9 bg-primary text-primary-foreground text-[10px] md:text-[11px] font-bold shadow-md shadow-primary/20 hover:opacity-90 active:scale-95 transition-all gap-1"
+            className="flex-1 h-11 rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xs shadow-lg shadow-primary/25 active:scale-[0.97] transition-all gap-2"
           >
-            <ShoppingBasket className="h-3.5 w-3.5 flex-shrink-0" />
+            <ShoppingBasket className="h-4 w-4" />
             <span>Add to Cart</span>
+          </Button>
+          
+          <Button
+            variant="outline"
+            className="h-11 w-11 p-0 flex-shrink-0 rounded-2xl border-primary/20 text-primary hover:bg-primary/5 hidden sm:flex"
+            // asChild
+          >
+            <Link href={`/products/${product.id}`}>
+              <ArrowRight className="h-5 w-5" />
+            </Link>
           </Button>
         </div>
       </div>
@@ -409,7 +405,8 @@ export default function UserDashboard() {
   };
 
   return (
-    <div className="space-y-8 md:space-y-12 pb-20">
+    // <div className="space-y-8 md:space-y-12 pb-20">
+    <div className="space-y-8 md:space-y-12 pb-20 scroll-smooth antialiased">
       {/* ── 2. FOOD CATEGORIES ──────────────────────────────────────────── */}
       <section className="space-y-3">
         <div className="mb-1 text-center">

@@ -5,6 +5,234 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* ─── BALANCED BOLD TYPOGRAPHY ─── */
+  --font-sans: var(--font-sans);
+  --font-heading: var(--font-sans);
+
+  /* Refined Scale: Professional and legible without being "huge" */
+  --text-xs: 0.75rem; /* ~14px */
+  --text-sm: 0.85rem; /* ~16px (Perfect for category labels) */
+  --text-base: 1.1rem; /* ~18px (Standard body text) */
+  --text-lg: 1.25rem; /* ~21px */
+  --text-xl: 1.5rem; /* ~25px */
+  --text-2xl: 2rem; /* ~33px */
+  --text-3xl: 2.75rem; /* ~46px */
+  --text-4xl: 3.5rem; /* ~58px */
+
+  /* ─── COLOR SYSTEM ─── */
+  /* Base */
+  --background: #090014;
+  --foreground: #f5e9ff;
+
+  /* Primary */
+  --primary: #c026ff;
+  --primary-foreground: #ffffff;
+
+  /* Secondary */
+  --secondary: #7a00ff;
+  --secondary-foreground: #f8f2ff;
+
+  /* Muted */
+  --muted: #1a0b2e;
+  --muted-foreground: #c9a7ff;
+
+  /* Accent */
+  --accent: #e056ff;
+  --accent-foreground: #ffffff;
+
+  /* Destructive */
+  --destructive: #ff2d75;
+
+  /* Borders / Inputs */
+  --border: #7b2cff;
+  --input: #140022;
+  --ring: #d946ef;
+
+  /* Tailwind mapped tokens */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* ─── BOLD RADIUS ─── */
+  --radius-lg: 0.8rem;
+  --radius-md: 0.6rem;
+  --radius-sm: 0.4rem;
+}
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.14 0 0);
+
+  /* Zenda Purple - Strong but sophisticated */
+  --primary: oklch(0.55 0.2 285);
+  --primary-foreground: oklch(0.99 0.01 285);
+
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.5 0 0);
+
+  --border: oklch(0.92 0 0);
+  --input: oklch(0.92 0 0);
+  --ring: oklch(0.55 0.2 285);
+
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: oklch(0.14 0 0);
+  --foreground: oklch(0.99 0 0);
+
+  --primary: oklch(0.72 0.18 285);
+  --primary-foreground: oklch(0.18 0.05 285);
+
+  --muted: oklch(0.24 0 0);
+  --muted-foreground: oklch(0.7 0 0);
+
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+}
+
+@layer base {
+  html {
+    /* Slight bump (105%) ensures Retina screens look great without text being giant */
+    font-size: 105%;
+    @apply antialiased scroll-smooth;
+  }
+
+  body {
+    /* Medium weight (500) gives that "Premium App" feel */
+    @apply bg-background text-foreground font-medium leading-[1.5];
+  }
+
+  /* ─── REFINED BOLD HEADINGS ─── */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold tracking-tight text-foreground;
+  }
+
+  /* Use for "FOOD & GROCERIES" section titles */
+  .section-heading {
+    @apply text-[11px] font-extrabold uppercase tracking-[0.18em] text-muted-foreground/90 mb-8 text-center;
+  }
+
+  /* Use for labels like "Fruits & Veggies" */
+  .category-label {
+    @apply text-sm font-semibold mt-2.5 text-center leading-tight transition-colors;
+  }
+
+  * {
+    @apply border-border outline-ring/50;
+  }
+}
+
+/* ─── UI ENHANCEMENTS ─── */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Add this class to your category circles for a subtle hover effect */
+  .category-card {
+    @apply transition-transform duration-200 hover:scale-110 active:scale-95 cursor-pointer;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Add these to your globals.css
+   ───────────────────────────────────────────── */
+
+@keyframes bio-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 10px 2px rgba(93, 202, 165, 0.4),
+      0 0 22px 4px rgba(29, 158, 117, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 18px 5px rgba(93, 202, 165, 0.65),
+      0 0 38px 8px rgba(29, 158, 117, 0.32);
+  }
+}
+
+.sell-bio {
+  animation: bio-pulse 2.4s ease-in-out infinite;
+}
+
+/* Purple bioluminescent sell button */
+.sell-bio-purple {
+  box-shadow:
+    0 0 8px 2px rgba(127, 119, 221, 0.45),
+    0 0 20px 4px rgba(127, 119, 221, 0.25),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.25s ease, transform 0.15s ease;
+}
+.sell-bio-purple:hover {
+  box-shadow:
+    0 0 12px 4px rgba(127, 119, 221, 0.65),
+    0 0 32px 8px rgba(127, 119, 221, 0.35),
+    0 4px 12px rgba(0, 0, 0, 0.25);
+  transform: translateY(-1px);
+}
+.sell-bio-purple:active {
+  transform: scale(0.97);
+}
+
+@layer base {
+  /* Ultra-Thin Purple Scrollbar */
+  ::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #a855f7; /* Purple 500 */
+    border-radius: 20px;
+    box-shadow: 0 0 8px rgba(168, 85, 247, 0.4); /* Neon glow effect */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #c084fc; /* Purple 400 */
+  }
+
+  /* Force hardware acceleration for smoother rendering */
+  html, body {
+    overflow-x: hidden;
+    height: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+/* 
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
@@ -127,4 +355,4 @@
   html {
     @apply font-sans;
   }
-}
+} */
