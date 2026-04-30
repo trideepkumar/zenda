@@ -64,7 +64,7 @@ export function ShopDetail({ shop, onBack }: ShopDetailProps) {
           </span>
           <span className="flex items-center gap-1.5">
             <Clock className="h-3.5 w-3.5" />
-            {shop.time} min
+            {10-20} min
           </span>
           <span className="flex items-center gap-1.5">
             <Bike className="h-3.5 w-3.5" />
@@ -74,7 +74,7 @@ export function ShopDetail({ shop, onBack }: ShopDetailProps) {
           </span>
           <span className="flex items-center gap-1.5">
             <MapPin className="h-3.5 w-3.5" />
-            {shop.address}
+            {/* {shop.address} */}
           </span>
         </div>
       </div>

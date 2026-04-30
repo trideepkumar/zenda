@@ -84,7 +84,7 @@ function ShopCard({ shop, onClick }: { shop: Shop; onClick: () => void }) {
         {/* Delivery time pill */}
         <div className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 bg-black/50 backdrop-blur-sm text-white text-[9px] sm:text-[10px] font-semibold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-lg flex items-center gap-1 border border-white/10">
           <Clock className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
-          {shop.time}m
+          {10-20}m
         </div>
       </div>
 
@@ -94,7 +94,7 @@ function ShopCard({ shop, onClick }: { shop: Shop; onClick: () => void }) {
           {shop.name}
         </h3>
         <p className="text-[10px] sm:text-[11px] text-muted-foreground mb-2 line-clamp-1">
-          {shop.address}
+          {/* {shop.address} */}
         </p>
 
         <div className="flex items-center justify-between gap-1">
