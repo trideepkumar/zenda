@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+// import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   Search,
@@ -21,6 +21,7 @@ import { useAuthStore } from "@/store/authStore";
 import { ThemeToggle } from "../theme-toggle";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
+import { ProgressLink } from "../progress-link";
 
 // ─────────────────────────────────────────────
 // Types
@@ -550,12 +551,12 @@ export function Navbar() {
             </button>
 
             {/* Logo */}
-            <Link
+            <ProgressLink
               href="/"
               className="text-2xl md:text-[28px] font-black text-[#7F77DD] tracking-tighter shrink-0 leading-none"
             >
               zenda
-            </Link>
+            </ProgressLink>
 
             {/* Location pill — matches search input height (h-10 / 40px) */}
             <button
@@ -602,7 +603,7 @@ export function Navbar() {
               </div>
 
               {/* Cart */}
-              <Link
+              <ProgressLink
                 href="/cart"
                 aria-label="Cart"
                 className={cn(
@@ -616,7 +617,7 @@ export function Navbar() {
                 <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-md bg-[#ff3269] text-[9px] font-bold text-white leading-none">
                   3
                 </span>
-              </Link>
+              </ProgressLink>
 
               {/* Profile — desktop */}
               {user ? (
@@ -633,7 +634,7 @@ export function Navbar() {
                   <User className="h-5 w-5" />
                 </button>
               ) : (
-                <Link
+                <ProgressLink
                   href="/login"
                   className={cn(
                     "hidden sm:flex items-center gap-1.5",
@@ -646,7 +647,7 @@ export function Navbar() {
                 >
                   <User className="h-4 w-4" />
                   Login
-                </Link>
+                </ProgressLink>
               )}
 
               <ThemeToggle />

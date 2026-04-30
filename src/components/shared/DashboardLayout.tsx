@@ -1,7 +1,10 @@
-
+import { Suspense } from "react";
 import Footer from "@/app/(user)/_components/footer";
 import { NavbarWrapper } from "@/components/shared/navbar-wrapper";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
+import { ProgressProvider } from "@/lib/progress-context";
+import { TopProgressLoader } from "@/components/providers/top-progress-loader";
+import { NavigationEvents } from "@/components/providers/navigation-events";
 
 export default function DashboardLayout({
   children,
@@ -9,19 +12,46 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <SmoothScroll>
-     <div className="flex flex-col min-h-screen w-full bg-background">
-  <NavbarWrapper />
-
-  <main className="flex-1 max-w-screen-xl mx-auto w-full p-4 md:p-8">
-    {children}
-  </main>
-
-  <Footer />
-</div>
-    </SmoothScroll>
+    <ProgressProvider>
+      <TopProgressLoader />
+      <Suspense>
+        <NavigationEvents />
+      </Suspense>
+      <SmoothScroll>
+        <div className="flex flex-col min-h-screen w-full bg-background">
+          <NavbarWrapper />
+          <main className="flex-1 max-w-screen-xl mx-auto w-full p-4 md:p-8">
+            {children}
+          </main>
+          <Footer />
+        </div>
+      </SmoothScroll>
+    </ProgressProvider>
   );
 }
+// import Footer from "@/app/(user)/_components/footer";
+// import { NavbarWrapper } from "@/components/shared/navbar-wrapper";
+// import { SmoothScroll } from "@/components/providers/smooth-scroll";
+
+// export default function DashboardLayout({
+//   children,
+// }: {
+//   children: React.ReactNode;
+// }) {
+//   return (
+//     <SmoothScroll>
+//      <div className="flex flex-col min-h-screen w-full bg-background">
+//   <NavbarWrapper />
+
+//   <main className="flex-1 max-w-screen-xl mx-auto w-full p-4 md:p-8">
+//     {children}
+//   </main>
+
+//   <Footer />
+// </div>
+//     </SmoothScroll>
+//   );
+// }
 
 // import Footer from "@/app/(user)/_components/footer";
 // import { Navbar } from "@/components/shared/Navbar";

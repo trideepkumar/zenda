@@ -21,6 +21,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useCartStore } from "@/store/cartStore";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ProgressLink } from "@/components/progress-link";
 
 // ─── CONSTANTS ────────────────────────────────────────────────────────────────
 
@@ -187,14 +188,14 @@ const ProductCard = memo(function ProductCard({
           </button>
         </div>
 
-        <Link href={`/products/${product.id}`} className="block h-full w-full">
+        <ProgressLink href={`/products/${product.id}`} className="block h-full w-full">
           <img
             src={product.imageUrl}
             alt={product.name}
             className="object-cover w-full h-full transition-transform duration-1000 ease-out group-hover:scale-110"
             loading="lazy"
           />
-        </Link>
+        </ProgressLink>
       </div>
 
       {/* Content Area */}
@@ -209,11 +210,11 @@ const ProductCard = memo(function ProductCard({
         </div>
 
         {/* Title */}
-        <Link href={`/products/${product.id}`} className="mb-3">
+        <ProgressLink href={`/products/${product.id}`} className="mb-3">
           <h3 className="font-semibold text-sm md:text-base text-foreground leading-tight line-clamp-2 group-hover:text-primary transition-colors h-10">
             {product.name}
           </h3>
-        </Link>
+        </ProgressLink>
 
         {/* Pricing */}
         <div className="flex items-end gap-2 mb-4">
@@ -242,9 +243,9 @@ const ProductCard = memo(function ProductCard({
             className="h-11 w-11 p-0 flex-shrink-0 rounded-2xl border-primary/20 text-primary hover:bg-primary/5 hidden sm:flex"
             // asChild
           >
-            <Link href={`/products/${product.id}`}>
+            <ProgressLink href={`/products/${product.id}`}>
               <ArrowRight className="h-5 w-5" />
-            </Link>
+            </ProgressLink>
           </Button>
         </div>
       </div>
@@ -282,9 +283,9 @@ function SectionHeader({
           // asChild
           className="text-primary font-semibold hover:bg-primary/5 p-0 h-auto text-xs md:text-sm"
         >
-          <Link href={href}>
+          <ProgressLink href={href}>
             See all <ChevronRight className="h-3.5 w-3.5 ml-0.5" />
-          </Link>
+          </ProgressLink>
         </Button>
       )}
     </div>
@@ -303,7 +304,7 @@ function CategoryPill({
   href: string;
 }) {
   return (
-    <Link
+    <ProgressLink
       href={href}
       className="group flex flex-col items-center gap-1.5 w-[68px] md:w-[80px] flex-shrink-0"
     >
@@ -317,7 +318,7 @@ function CategoryPill({
       <span className="text-[10px] md:text-[11px] font-medium text-center text-muted-foreground leading-tight line-clamp-2 group-hover:text-primary transition-colors w-full">
         {name}
       </span>
-    </Link>
+    </ProgressLink>
   );
 }
 
@@ -335,7 +336,7 @@ function BrowseCard({
   href: string;
 }) {
   return (
-    <Link href={href} className="group block">
+    <ProgressLink href={href} className="group block">
       <div className="rounded-2xl overflow-hidden border border-border bg-card transition-all duration-200 hover:shadow-lg hover:shadow-primary/8 hover:border-primary/30 hover:-translate-y-0.5">
         <div className="h-20 md:h-24 overflow-hidden">
           <img
@@ -354,7 +355,7 @@ function BrowseCard({
           </p>
         </div>
       </div>
-    </Link>
+    </ProgressLink>
   );
 }
 
