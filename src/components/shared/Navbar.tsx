@@ -598,9 +598,9 @@ export function Navbar() {
             <div className="flex items-center gap-2 ml-auto sm:ml-0">
 
               {/* Sell — desktop only */}
-              <div className="hidden sm:block">
+              {/* <div className="hidden sm:block">
                 <SellButton onClick={() => router.push("/seller")} compact />
-              </div>
+              </div> */}
 
               {/* Cart */}
               <ProgressLink

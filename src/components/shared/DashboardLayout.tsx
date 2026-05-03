@@ -23,7 +23,7 @@ export default function DashboardLayout({
           <main className="flex-1 max-w-screen-xl mx-auto w-full p-4 md:p-8">
             {children}
           </main>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </SmoothScroll>
     </ProgressProvider>

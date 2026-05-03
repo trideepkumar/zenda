@@ -1,299 +1,134 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { useRouter } from "next/navigation";
-import {
-  Heart,
-  MessageCircle,
-  MapPin,
-  Tag,
-  Bike,
-  Star,
-  Clock,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { Sidebar } from "../_components/sidebar";
-import { ShopGrid } from "../_components/shopgrid";
-import { ShopDetail } from "../_components/shopdetail";
-import { Shop, SHOPS } from "../_components/data";
+import { useState, useMemo } from "react";
+import { Clock, ChevronLeft, ShoppingCart, Minus, Plus } from "lucide-react";
+import { ProgressLink } from "@/components/progress-link";
 
-// import { Sidebar } from "./_components/Sidebar";
-// import { ShopGrid } from "./_components/ShopGrid";
-// import { ShopDetail } from "./_components/ShopDetail";
-// import { SHOPS, Shop } from "./_components/data";
-// import { CLASSIFIED_ITEMS } from "./_components/data"; // see note below
+// ─── REFINED PRODUCT CARD (Zenda Style) ───────────────────────────────────────
 
-/* ─── Types ───────────────────────────────────────────── */
-type ItemType = "delivery" | "classified";
-
-/* ─── Classified items (keep your original data here) ─── */
-const CLASSIFIED_DATA = [
-  {
-    id: "prod-1",
-    title: "MacBook Pro M2 – Space Gray",
-    category: "Electronics • Laptops",
-    price: 85000,
-    condition: "Like New",
-    distance: "2.5km",
-    img: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500",
-    urgent: true,
-  },
-  {
-    id: "prod-2",
-    title: "Sony WH-1000XM5 Headphones",
-    category: "Electronics • Audio",
-    price: 18500,
-    condition: "Good",
-    distance: "4.1km",
-    img: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=500",
-    urgent: false,
-  },
-  {
-    id: "prod-3",
-    title: "Vintage Teak Bookshelf",
-    category: "Furniture • Storage",
-    price: 3200,
-    condition: "Used – Good",
-    distance: "1.8km",
-    img: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500",
-    urgent: false,
-  },
-  {
-    id: "prod-4",
-    title: "Canon EOS R50 + 18-45mm",
-    category: "Photography • Cameras",
-    price: 54000,
-    condition: "Brand New",
-    distance: "6.3km",
-    img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500",
-    urgent: true,
-  },
-  {
-    id: "prod-5",
-    title: "Ergonomic Office Chair",
-    category: "Furniture • Office",
-    price: 7800,
-    condition: "Like New",
-    distance: "3.0km",
-    img: "https://images.unsplash.com/photo-1580480055273-228ff5388ef8?w=500",
-    urgent: false,
-  },
-  {
-    id: "prod-6",
-    title: "iPad Air 5th Gen + Pencil",
-    category: "Electronics • Tablets",
-    price: 42000,
-    condition: "Good",
-    distance: "5.7km",
-    img: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500",
-    urgent: false,
-  },
-  {
-    id: "prod-7",
-    title: "Mountain Bike – Trek Marlin 7",
-    category: "Sports & Fitness • Bicycles",
-    price: 15000,
-    condition: "Used – Fair",
-    distance: "8.2km",
-    img: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=500",
-    urgent: false,
-  },
-  {
-    id: "prod-8",
-    title: "Leather Jacket – Men's Medium",
-    category: "Clothing • Jackets",
-    price: 4500,
-    condition: "Used – Good",
-    distance: "2.9km",
-    img: "https://images.unsplash.com/photo-1521334884684-d80222895322?w=500",
-    urgent: false,
-  },
-];
-
-/* ─── Classified Card (unchanged from original) ────────── */
-function ClassifiedCard({ item }: { item: (typeof CLASSIFIED_DATA)[0] }) {
-  const router = useRouter();
-  const [liked, setLiked] = useState(false);
-
+function ProductCard({ item, qty, onAdd, onRemove }: any) {
   return (
-    <div
-      onClick={() => router.push(`/products/${item.id}`)}
-      className="group bg-card border border-border/60 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden transition-all active:scale-[0.98] duration-300 cursor-pointer flex flex-col"
-    >
-      <div className="relative aspect-square md:aspect-[4/3.5] overflow-hidden bg-muted">
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setLiked((l) => !l);
-          }}
-          className="absolute top-2 right-2 z-10 p-2 bg-background/70 backdrop-blur-md rounded-full shadow-sm"
-        >
-          <Heart
-            className={cn(
-              "h-3.5 w-3.5 transition-all",
-              liked ? "fill-rose-500 text-rose-500 scale-110" : "text-muted-foreground",
-            )}
-          />
-        </button>
-
-        {item.urgent && (
-          <div className="absolute top-2 left-2 z-10 bg-rose-500 text-white text-[8px] font-black px-2 py-0.5 rounded-md uppercase">
-            Urgent
-          </div>
-        )}
-
-        <img
-          src={item.img}
-          className="w-full h-full object-cover transition-transform duration-700 md:group-hover:scale-105"
-          alt={item.title}
-        />
-
-        <div className="absolute bottom-2 left-2 bg-black/40 backdrop-blur-md px-2 py-1 rounded-lg border border-white/10">
-          <span className="text-[9px] font-bold text-white uppercase tracking-tighter">
-            {item.condition}
-          </span>
-        </div>
+    <div className="bg-white rounded-2xl border border-gray-100 flex flex-col h-full shadow-sm hover:shadow-md transition-all relative overflow-hidden group">
+      {/* Discount Badge */}
+      <div className="absolute top-0 left-0 z-10 bg-[#1e5fa3] text-white font-bold px-2 py-1 rounded-br-xl text-[10px] text-center leading-tight">
+        {item.discount}%<br />OFF
       </div>
 
-      <div className="p-3 md:p-5 flex flex-col flex-1 justify-between gap-3">
-        <div className="space-y-0.5">
-          <h4 className="font-bold text-foreground text-xs md:text-base line-clamp-1">
-            {item.title}
-          </h4>
-          <span className="font-black text-primary text-xs md:text-lg block">
-            ₹{item.price.toLocaleString("en-IN")}
-          </span>
+      <div className="p-2 sm:p-3 flex flex-col h-full">
+        <div className="aspect-square rounded-xl overflow-hidden mb-3 bg-gray-50">
+          <img src={item.img} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         </div>
 
-        <div className="flex flex-col gap-2">
-          <div className="flex gap-1.5">
-            <Button
-              variant="outline"
-              onClick={(e) => e.stopPropagation()}
-              className="flex-1 rounded-lg md:rounded-xl h-7 md:h-9 border-border font-bold text-[9px] md:text-xs gap-1"
-            >
-              <MessageCircle className="h-3 w-3" /> Chat
-            </Button>
-            <Button
-              onClick={(e) => {
-                e.stopPropagation();
-                router.push(`/products/${item.id}`);
-              }}
-              className="flex-1 rounded-lg md:rounded-xl h-7 md:h-9 font-bold text-[9px] md:text-xs bg-muted text-foreground hover:bg-primary hover:text-white border-none"
-            >
-              Details
-            </Button>
+        <div className="flex items-center gap-1 mb-1.5">
+          <Clock className="h-3 w-3 text-orange-400" />
+          <span className="text-[9px] font-black text-orange-400 uppercase tracking-tighter">9 MINS</span>
+        </div>
+
+        <h3 className="text-[13px] font-bold text-gray-800 leading-tight line-clamp-2">
+          {item.name} <span className="font-normal text-gray-400">({item.nameLocal})</span>
+        </h3>
+        <p className="text-[11px] text-gray-400 mt-1">{item.qty}</p>
+
+        <div className="flex items-center justify-between mt-auto pt-4">
+          <div className="flex flex-col">
+            <span className="text-[15px] font-black text-gray-900">₹{item.price}</span>
+            <span className="text-[10px] text-gray-400 line-through">₹{item.oldPrice}</span>
           </div>
 
-          <div className="flex items-center text-[8px] md:text-[10px] text-muted-foreground font-medium uppercase tracking-tight">
-            <MapPin className="h-2.5 w-2.5 mr-1 text-primary shrink-0" />
-            {item.distance} • Kochi
-          </div>
+          {qty === 0 ? (
+            <button 
+              onClick={onAdd}
+              className="border-2 border-[#00B344] text-[#00B344] font-black text-[11px] px-4 py-1.5 rounded-xl hover:bg-green-50"
+            >
+              ADD
+            </button>
+          ) : (
+            <div className="flex items-center bg-[#00B344] rounded-xl text-white overflow-hidden">
+              <button onClick={onRemove} className="px-2 py-1.5 hover:bg-green-700"><Minus className="h-3 w-3" /></button>
+              <span className="px-2 font-bold text-[12px]">{qty}</span>
+              <button onClick={onAdd} className="px-2 py-1.5 hover:bg-green-700"><Plus className="h-3 w-3" /></button>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-  export default function HybridMarketplace() {
-  const [activeTab, setActiveTab] = useState<ItemType>("delivery");
-  const [animating, setAnimating] = useState(false);
-  const [selectedShop, setSelectedShop] = useState<Shop | null>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
+// ─── MAIN CATEGORY VIEW ──────────────────────────────────────────────────────
 
-  const switchTab = (tab: ItemType) => {
-    if (tab === activeTab || animating) return;
-    setAnimating(true);
-    setSelectedShop(null); // reset shop view on tab switch
-    setTimeout(() => {
-      setActiveTab(tab);
-      gridRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-      setAnimating(false);
-    }, 220);
-  };
+export default function CategoryView({ categoryName = "Vegetables & Fruits" }) {
+  const [activeSubCat, setActiveSubCat] = useState("all");
+  const [cart, setCart] = useState<Record<string, number>>({});
+
+  // Subcategories specific to "Fruits & Vegetables"
+  const subCats = [
+    { id: "all", name: "All", img: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=100" },
+    { id: "veg", name: "Vegetables", img: "https://images.unsplash.com/photo-1566385101042-1a000c1268c4?w=100" },
+    { id: "fruit", name: "Fruits", img: "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=100" },
+    { id: "exotic", name: "Exotics", img: "https://images.unsplash.com/photo-1527325678964-54921661f888?w=100" },
+    { id: "leafy", name: "Leafy", img: "https://images.unsplash.com/photo-1567375698348-5d9d5ae99de0?w=100" },
+    { id: "hydro", name: "Hydroponics", img: "https://images.unsplash.com/photo-1558449028-b53a39d100fc?w=100" },
+  ];
 
   return (
-    <div className="bg-background text-foreground">
-      {/* ── Toggle bar ── */}
-      <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 py-3">
-          <div className="relative w-full bg-muted rounded-2xl p-1 flex">
-            <div
-              className={cn(
-                "absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-xl bg-background shadow-md",
-                "transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
-                activeTab === "delivery" ? "left-1" : "left-[calc(50%+3px)]",
-              )}
-            />
-            {(["delivery", "classified"] as ItemType[]).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => switchTab(tab)}
-                className={cn(
-                  "relative z-10 flex-1 py-2.5 rounded-xl text-sm font-black",
-                  "transition-colors duration-300 flex items-center justify-center gap-2",
-                  activeTab === tab
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground",
-                )}
-              >
-                {tab === "delivery" ? (
-                  <>
-                    <Bike className="h-4 w-4" /> Delivery
-                  </>
-                ) : (
-                  <>
-                    <Tag className="h-4 w-4" /> Classifieds
-                  </>
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+    <div className="flex flex-col h-screen bg-white">
+      {/* Header */}
+      <header className="flex items-center px-4 py-3 border-b border-gray-100 gap-4">
+        <ProgressLink href="/">
+          <button className="h-9 w-9 rounded-full bg-gray-50 flex items-center justify-center">
+            <ChevronLeft className="h-5 w-5 text-blue-600" />
+          </button>
+        </ProgressLink>
+        <h1 className="text-lg font-black text-gray-900 flex-1">{categoryName}</h1>
+      </header>
 
-      {/* ── Body ── */}
-      <div className="max-w-7xl mx-auto px-4 py-6 flex gap-6 items-start">
-        {/* Sidebar */}
-        <aside
-          className="hidden lg:block w-64 xl:w-72 shrink-0 sticky top-[73px]"
-          style={{ maxHeight: "calc(100vh - 73px)", overflowY: "auto", scrollbarWidth: "none" }}
-        >
-          <Sidebar tab={activeTab} />
+      <div className="flex flex-1 overflow-hidden">
+        {/* Vertical Sub-Category Sidebar (Scrolling) */}
+        <aside className="w-20 border-r border-gray-50 flex flex-col overflow-y-auto scrollbar-hide py-2">
+          {subCats.map((sub) => (
+            <button 
+              key={sub.id}
+              onClick={() => setActiveSubCat(sub.id)}
+              className={`flex flex-col items-center py-4 px-1 border-l-4 transition-all ${
+                activeSubCat === sub.id ? "border-[#00B344] bg-green-50/50" : "border-transparent opacity-60"
+              }`}
+            >
+              <div className="w-12 h-12 rounded-full overflow-hidden border border-gray-100 mb-1">
+                <img src={sub.img} className="w-full h-full object-cover" alt="" />
+              </div>
+              <span className="text-[9px] font-bold text-center leading-tight">{sub.name}</span>
+            </button>
+          ))}
         </aside>
 
-        {/* Main content */}
-        <section className="flex-1 min-w-0">
-          <div
-            ref={gridRef}
-            className={cn(
-              "transition-all duration-300",
-              animating ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0",
-            )}
-          >
-            {activeTab === "delivery" ? (
-              selectedShop ? (
-                /* ── Shop product view ── */
-                <ShopDetail
-                  shop={selectedShop}
-                  onBack={() => setSelectedShop(null)}
+        {/* Product Grid (Scrolling) */}
+        <main className="flex-1 overflow-y-auto p-4 bg-gray-50/30">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-20">
+             {/* Map your products here */}
+             {[1,2,3,4,5,6,7,8].map(i => (
+                <ProductCard 
+                   key={i} 
+                   item={{name: "Onion", nameLocal: "Savala", price: 26, oldPrice: 30, discount: 13, qty: "1 kg", img: "..."}}
+                   qty={cart[i] || 0}
+                   onAdd={() => setCart(p => ({...p, [i]: (p[i]||0)+1}))}
+                   onRemove={() => setCart(p => ({...p, [i]: Math.max(0, p[i]-1)}))}
                 />
-              ) : (
-                /* ── Shop listing view ── */
-                <ShopGrid shops={SHOPS} onSelectShop={setSelectedShop} />
-              )
-            ) : (
-              /* ── Classifieds grid (unchanged) ── */
-              <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-5">
-                {CLASSIFIED_DATA.map((item) => (
-                  <ClassifiedCard key={item.id} item={item} />
-                ))}
-              </div>
-            )}
+             ))}
           </div>
-        </section>
+        </main>
       </div>
+
+      {/* Floating Cart (Zenda Style) */}
+      {Object.values(cart).some(q => q > 0) && (
+        <div className="fixed bottom-6 left-4 right-4 bg-[#00B344] text-white p-4 rounded-2xl flex items-center justify-between shadow-xl">
+           <div className="flex flex-col">
+              <span className="text-[10px] font-bold">4 ITEMS</span>
+              <span className="text-lg font-black">₹112</span>
+           </div>
+           <button className="bg-white text-[#00B344] px-6 py-2 rounded-xl font-black text-sm uppercase">View Cart</button>
+        </div>
+      )}
     </div>
   );
 }
